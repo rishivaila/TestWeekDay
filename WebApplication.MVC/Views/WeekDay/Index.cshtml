@@ -1,0 +1,92 @@
+﻿@using TestWeekDay.Models
+@model ApiResponse
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .divBox {
+        float: left;
+        margin: 5px;
+    }
+</style>
+<h1>ÒweekdayÓ</h1>
+<div class="divBox">
+
+    <form action="/" method="post">
+
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+        <input type="date" name="dates" value="" /> <br />
+
+        <input type="submit" name="Submit" value="Submit" />
+    </form>
+</div>
+
+<div class="divBox">
+
+    @Html.DropDownList("SummaryText", Model.Result.Select(p => new SelectListItem { Text = p.SummaryText + " - (" + p.CurrentDate + ")", Value = p.SummaryText }), "Select Day")
+
+</div>
+<div class="divBox">
+    <div id="divDDLResult">
+    </div>
+</div>
+
+<div class="clearfix"></div>
+@*<div>
+
+        @foreach (var item in Model.Result)
+        {
+        <ul class="divBox">
+            <li>@item.SummaryText</li>
+            <li>@item.CurrentTime</li>
+            <li>@item.CurrentTime1</li>
+            <li>@item.CurrentTime2</li>
+            <li>@item.CurrentTime3</li>
+            <li>@item.CurrentTime4</li>
+            <li>@item.CurrentTime5</li>
+            <li>@item.CurrentTime6</li>
+        </ul>
+        }
+
+    </div>*@
+
+<div>
+    <h6>Note :</h6>
+    - select day from dropdown it will show next corresponding dates <br>
+    - if no data is submited, defaultly from the current day to next seven days will be added to dropdown <br>
+</div>
+<script type="text/javascript">
+    var model = @Json.Serialize(Model);
+    var ddl = document.getElementById("SummaryText");
+
+    ddl.addEventListener("change", function (e) {
+        var selectedObj = model.result[ddl.selectedIndex];
+        alert(ddl.value + "\n"
+            + selectedObj.currentTime + "\n"
+            + selectedObj.currentTime1 + "\n"
+            + selectedObj.currentTime2 + "\n"
+            + selectedObj.currentTime3 + "\n"
+            + selectedObj.currentTime4 + "\n"
+            + selectedObj.currentTime5 + "\n"
+            + selectedObj.currentTime6
+        );
+        var s =
+            "<ul>" +
+            //"<li>" + selectedObj.summaryText + "(" + selectedObj.currentTime + ")" + "</li>" +
+            "<li>" + selectedObj.currentTime + "</li>" +
+            "<li>" + selectedObj.currentTime1 + "</li>" +
+            "<li>" + selectedObj.currentTime2 + "</li>" +
+            "<li>" + selectedObj.currentTime3 + "</li>" +
+            "<li>" + selectedObj.currentTime4 + "</li>" +
+            "<li>" + selectedObj.currentTime5 + "</li>" +
+            "<li>" + selectedObj.currentTime6 + "</li>" +
+            "</ul>";
+        var divDDLResult = document.getElementById("divDDLResult");
+        divDDLResult.innerHTML = s;
+    });
+</script>
